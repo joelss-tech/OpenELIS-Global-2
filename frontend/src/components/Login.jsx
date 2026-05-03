@@ -128,15 +128,31 @@ function Login(props) {
       : `images/openelis_logo_full.png`;
 
     return (
-      <>
-        <Column lg={6} md={0} sm={0} />
-        <Column lg={4} md={8} sm={4}>
-          <picture>
+<>
+        <div className="absolute top-1 left-0 
+         rounded-3xl h-full
+        bg-slate-100 drop
+        shadow-3xl border-collapse
+        ">
+ 
+        <div className=" 
+        fixed top-8 
+        left-1
+        rounded-2xl 
+        sm:top-36 sm:left-20
+        p-1 gap-4 mt-16 
+        bg-slate-300 drop
+        shadow-2xl border 
+        lg:left-32 lg:top-20
+         lg:p-4 
+        md:top-40 md:left-4
+         ">
+          <picture className="opacity-100" >
             <img
               src={logoSrc}
               alt="fullsize logo"
-              width="300"
-              height="56"
+              className=" h-9 w-96 rounded-s-3xl"
+             
               style={{ objectFit: "contain" }}
               onError={(e) => {
                 // Fallback to default logo if custom logo fails to load
@@ -144,14 +160,40 @@ function Login(props) {
               }}
             />
           </picture>
-        </Column>
-        <Column lg={6} md={0} sm={0} />
-        <Column lg={6} md={0} sm={0} />
-        <Column lg={4} md={8} sm={4}>
+          
+        </div>
+
+ <div className="fixed inset-0 -z-10 ">
+  <picture className="block w-full h-full">
+    <img
+      src="images/laboratory-microscope.png"
+      className="w-full h-full object-cover opacity-50"
+      alt="Laboratory microscope background"
+    />
+  </picture>
+</div>
+
+<div  className=" 
+fixed bottom-0
+left-0 text-bold 
+ flex-col lg:left-0 
+ lg:rounded-3xl
+  lg:font-bold 
+ drop shadow-3xl border   
+ bg-slate-300
+  ">
+
+<p className=" 
+ drop-shadow-3xl
+ font-thin 
+  p-2  border  
+  rounded-2xl ">
           <FormattedMessage id="login.notice.message" />
-        </Column>
-        <Column lg={6} md={0} sm={0} />
-      </>
+        </p>
+</div>     
+  </div>
+</>
+      
     );
   };
 
@@ -234,26 +276,41 @@ function Login(props) {
   };
 
   return (
-    <>
+    
+    <div className="
+    absolute top-40 
+     left-1 lg:left-32 
+     lg:p-4 lg:top-60 
+     rounded-2xl sm:top-80
+      sm:left-20 
+      md:top-80 
+      md:left-4 ">
       <div
         data-cy="login-Page-Content"
-        className="loginPageContent oe-loginPageContent"
+      // className="  loginPageContent oe-loginPageContent  "
       >
         {notificationVisible === true ? <AlertDialog /> : ""}
-        <div className="oe-loginPageCenter">
+        <div className=" 
+        left-10 p-8 mt-5
+        rounded-2xl bg-slate-200 
+        w-96 drop-shadow-3xl
+        border-collapse
+      border-slate-300 
+        right-6 
+        lg:left-80 lg:p-4 
+         lg:h-64 lg:w-96">
           <Grid fullWidth={true}>{loginMessage()}</Grid>
           <Grid fullWidth={false}>
-            <Column lg={16}>
-              <br />
-              <br />
-            </Column>
-            <Column lg={6} md={0} sm={0} />
-            <Column lg={4} md={8} sm={4}>
               <Section>
                 {samlRedirectInitiated ? (
                   <Stack gap={5}>
                     <FormLabel>
-                      <Heading>
+                      <Heading className="
+                      items-center 
+                      text-center 
+                      font-bold
+                       bg-slate-200
+                        rounded-2xl">
                         <FormattedMessage id="login.title" />
                       </Heading>
                     </FormLabel>
@@ -275,13 +332,31 @@ function Login(props) {
                       username: "",
                       password: "",
                     }}
-                    onSubmit={(values) => doLogin(values)}
+                    onSubmit={(values) => {
+                      doLogin(values);
+                      fetch(config.serverBaseUrl + "/LoginPage", {
+                        //includes the browser sessionId in the Header for Authentication on the backend server
+                        credentials: "include",
+                        method: "GET",
+                      })
+                        .then((response) => response.status)
+                        .then(() => {
+                          doLogin(values);
+                        })
+                        .catch(() => { });
+                    }}
                   >
                     {({ isValid, handleChange, handleSubmit }) => (
                       <Form onSubmit={handleSubmit} onChange={handleChange}>
                         <Stack gap={5}>
                           <FormLabel>
-                            <Heading>
+                            <Heading className=" 
+                             items-center
+                             text-center 
+                            font-bold
+                             bg-blue-50
+                              rounded-2xl
+                               drop-shadow-2xl ">
                               <FormattedMessage id="login.title" />
                             </Heading>
                           </FormLabel>
@@ -348,7 +423,7 @@ function Login(props) {
                           )}
                           {configurationProperties?.useSaml == "true" &&
                             configurationProperties?.useSamlLoginPage !==
-                              "false" && (
+                            "false" && (
                               <Button
                                 type="button"
                                 renderIcon={HardwareSecurityModule}
@@ -370,15 +445,16 @@ function Login(props) {
                   </Formik>
                 )}
               </Section>
-            </Column>
-            <Column lg={6} md={0} sm={0} />
-            <Column lg={0} md={0} sm={0}>
+            
+           
               {loginMessage()}
-            </Column>
+          
           </Grid>
         </div>
       </div>
-    </>
+       </div>
+       
+    
   );
 }
 

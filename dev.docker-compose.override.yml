@@ -1,0 +1,16 @@
+
+ # dev.docker-compose.override.yml
+services:
+  frontend.openelis.org:
+    volumes:
+      - './frontend/package.json:/app/package.json'
+      - './frontend/package-lock.json:/app/package-lock.json'
+      - './frontend/tailwind.config.js:/app/tailwind.config.js'
+      - './frontend/postcss.config.js:/app/postcss.config.js'
+      - '/app/node_modules'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=2000
+      - WATCHPACK_POLLING=true
+      - WATCHPACK_POLLING_INTERVAL=2000
+      - FAST_REFRESH=false

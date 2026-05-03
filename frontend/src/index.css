@@ -185,3 +185,7 @@ a.cds--header__name.cds--header__name > span {
     opacity: 0.5;
   }
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
