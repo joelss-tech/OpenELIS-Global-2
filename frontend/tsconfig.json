@@ -23,14 +23,6 @@
     "checkJs": false,
     "isolatedModules": false
   },
-  "include": [
-    "src",
-    "tailwind.config.js",
-    "postcss.config.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist"
-  ]
+  "include": ["src", "tailwind.config.js", "postcss.config.js"],
+  "exclude": ["node_modules", "build", "dist"]
 }
